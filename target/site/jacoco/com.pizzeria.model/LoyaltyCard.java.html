@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LoyaltyCard.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lab2</a> &gt; <a href="index.source.html" class="el_package">com.pizzeria.model</a> &gt; <span class="el_source">LoyaltyCard.java</span></div><h1>LoyaltyCard.java</h1><pre class="source lang-java linenums">package com.pizzeria.model;
+
+import com.pizzeria.exceptions.InvalidDiscountException;
+import com.pizzeria.interfaces.Discountable;
+
+import java.time.LocalDate;
+
+/**
+ * Класс карты лояльности
+ */
+public class LoyaltyCard implements Discountable {
+    private String cardNumber;
+    private int points;
+    private String tier; // Bronze, Silver, Gold, Platinum
+    private LocalDate issueDate;
+    private LocalDate expiryDate;
+
+<span class="fc" id="L18">    public LoyaltyCard(String cardNumber) {</span>
+<span class="fc" id="L19">        this.cardNumber = cardNumber;</span>
+<span class="fc" id="L20">        this.points = 0;</span>
+<span class="fc" id="L21">        this.tier = &quot;Bronze&quot;;</span>
+<span class="fc" id="L22">        this.issueDate = LocalDate.now();</span>
+<span class="fc" id="L23">        this.expiryDate = issueDate.plusYears(1);</span>
+<span class="fc" id="L24">    }</span>
+
+    public void addPoints(int points) {
+<span class="nc" id="L27">        this.points += points;</span>
+<span class="nc" id="L28">        updateTier();</span>
+<span class="nc" id="L29">    }</span>
+
+    public boolean redeemPoints(int points) {
+<span class="nc bnc" id="L32" title="All 2 branches missed.">        if (this.points &gt;= points) {</span>
+<span class="nc" id="L33">            this.points -= points;</span>
+<span class="nc" id="L34">            return true;</span>
+        }
+<span class="nc" id="L36">        return false;</span>
+    }
+
+    private void updateTier() {
+<span class="nc bnc" id="L40" title="All 2 branches missed.">        if (points &gt;= 1000) {</span>
+<span class="nc" id="L41">            tier = &quot;Platinum&quot;;</span>
+<span class="nc bnc" id="L42" title="All 2 branches missed.">        } else if (points &gt;= 500) {</span>
+<span class="nc" id="L43">            tier = &quot;Gold&quot;;</span>
+<span class="nc bnc" id="L44" title="All 2 branches missed.">        } else if (points &gt;= 200) {</span>
+<span class="nc" id="L45">            tier = &quot;Silver&quot;;</span>
+        } else {
+<span class="nc" id="L47">            tier = &quot;Bronze&quot;;</span>
+        }
+<span class="nc" id="L49">    }</span>
+
+    @Override
+    public void applyDiscount(double percentage) throws InvalidDiscountException {
+<span class="nc bnc" id="L53" title="All 4 branches missed.">        if (percentage &lt; 0 || percentage &gt; 100) {</span>
+<span class="nc" id="L54">            throw new InvalidDiscountException(percentage);</span>
+        }
+        // Скидка применяется через другие механизмы
+<span class="nc" id="L57">    }</span>
+
+    @Override
+    public double getDiscountAmount() {
+<span class="nc bnc" id="L61" title="All 4 branches missed.">        switch (tier) {</span>
+<span class="nc" id="L62">            case &quot;Platinum&quot;: return 15.0;</span>
+<span class="nc" id="L63">            case &quot;Gold&quot;: return 10.0;</span>
+<span class="nc" id="L64">            case &quot;Silver&quot;: return 5.0;</span>
+<span class="nc" id="L65">            default: return 2.0;</span>
+        }
+    }
+
+    @Override
+    public boolean isDiscountApplicable() {
+<span class="nc" id="L71">        return LocalDate.now().isBefore(expiryDate);</span>
+    }
+
+    public boolean isExpired() {
+<span class="nc" id="L75">        return LocalDate.now().isAfter(expiryDate);</span>
+    }
+
+    public void renewCard() {
+<span class="nc" id="L79">        this.expiryDate = LocalDate.now().plusYears(1);</span>
+<span class="nc" id="L80">    }</span>
+
+    // Getters and Setters
+<span class="nc" id="L83">    public String getCardNumber() { return cardNumber; }</span>
+<span class="nc" id="L84">    public void setCardNumber(String cardNumber) { this.cardNumber = cardNumber; }</span>
+
+<span class="nc" id="L86">    public int getPoints() { return points; }</span>
+<span class="nc" id="L87">    public void setPoints(int points) { this.points = points; }</span>
+
+<span class="nc" id="L89">    public String getTier() { return tier; }</span>
+
+<span class="nc" id="L91">    public LocalDate getIssueDate() { return issueDate; }</span>
+<span class="nc" id="L92">    public void setIssueDate(LocalDate issueDate) { this.issueDate = issueDate; }</span>
+
+<span class="nc" id="L94">    public LocalDate getExpiryDate() { return expiryDate; }</span>
+<span class="nc" id="L95">    public void setExpiryDate(LocalDate expiryDate) { this.expiryDate = expiryDate; }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

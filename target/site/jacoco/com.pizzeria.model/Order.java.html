@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Order.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lab2</a> &gt; <a href="index.source.html" class="el_package">com.pizzeria.model</a> &gt; <span class="el_source">Order.java</span></div><h1>Order.java</h1><pre class="source lang-java linenums">package com.pizzeria.model;
+
+import com.pizzeria.enums.OrderStatus;
+import com.pizzeria.exceptions.InvalidDeliveryAddressException;
+import com.pizzeria.interfaces.Deliverable;
+import com.pizzeria.interfaces.Payable;
+import com.pizzeria.model.products.Product;
+import com.pizzeria.model.users.Customer;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Класс заказа
+ */
+public class Order implements Payable, Deliverable {
+    private String id;
+    private Customer customer;
+    private List&lt;OrderItem&gt; items;
+    private OrderStatus status;
+    private LocalDateTime orderTime;
+    private LocalDateTime deliveryTime;
+    private Address deliveryAddress;
+    private double discountPercentage;
+    private boolean isPaid;
+
+<span class="nc" id="L28">    public Order(String id, Customer customer) {</span>
+<span class="nc" id="L29">        this.id = id;</span>
+<span class="nc" id="L30">        this.customer = customer;</span>
+<span class="nc" id="L31">        this.items = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L32">        this.status = OrderStatus.PENDING;</span>
+<span class="nc" id="L33">        this.orderTime = LocalDateTime.now();</span>
+<span class="nc" id="L34">        this.discountPercentage = 0;</span>
+<span class="nc" id="L35">        this.isPaid = false;</span>
+<span class="nc" id="L36">    }</span>
+
+    public void addItem(Product product, int quantity) {
+<span class="nc" id="L39">        OrderItem item = new OrderItem(product, quantity);</span>
+<span class="nc" id="L40">        items.add(item);</span>
+<span class="nc" id="L41">    }</span>
+
+    public void removeItem(OrderItem item) {
+<span class="nc" id="L44">        items.remove(item);</span>
+<span class="nc" id="L45">    }</span>
+
+    @Override
+    public double getPrice() {
+<span class="nc" id="L49">        double total = 0;</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">        for (OrderItem item : items) {</span>
+<span class="nc" id="L51">            total += item.getTotalPrice();</span>
+<span class="nc" id="L52">        }</span>
+<span class="nc" id="L53">        return total;</span>
+    }
+
+    @Override
+    public void applyDiscount(double discountPercentage) {
+<span class="nc" id="L58">        this.discountPercentage = discountPercentage;</span>
+<span class="nc" id="L59">    }</span>
+
+    @Override
+    public double getFinalPrice() {
+<span class="nc" id="L63">        double basePrice = getPrice();</span>
+<span class="nc" id="L64">        double deliveryCost = calculateDeliveryCost();</span>
+<span class="nc" id="L65">        return (basePrice + deliveryCost) * (1 - discountPercentage / 100.0);</span>
+    }
+
+    @Override
+    public boolean processPayment(double amount) {
+<span class="nc bnc" id="L70" title="All 2 branches missed.">        if (amount &gt;= getFinalPrice()) {</span>
+<span class="nc" id="L71">            isPaid = true;</span>
+<span class="nc" id="L72">            status = OrderStatus.CONFIRMED;</span>
+<span class="nc" id="L73">            return true;</span>
+        }
+<span class="nc" id="L75">        return false;</span>
+    }
+
+    @Override
+    public void setDeliveryAddress(Address address) throws InvalidDeliveryAddressException {
+<span class="nc bnc" id="L80" title="All 2 branches missed.">        if (address == null) {</span>
+<span class="nc" id="L81">            throw new InvalidDeliveryAddressException(&quot;null&quot;, &quot;Адрес не может быть пустым&quot;);</span>
+        }
+<span class="nc" id="L83">        this.deliveryAddress = address;</span>
+<span class="nc" id="L84">    }</span>
+
+    @Override
+    public Address getDeliveryAddress() {
+<span class="nc" id="L88">        return deliveryAddress;</span>
+    }
+
+    @Override
+    public int calculateDeliveryTime() {
+<span class="nc bnc" id="L93" title="All 2 branches missed.">        if (deliveryAddress == null) {</span>
+<span class="nc" id="L94">            return 0; // самовывоз</span>
+        }
+        // Упрощенный расчет: 30 минут + 5 минут на км
+<span class="nc" id="L97">        return 30 + (int)(deliveryAddress.getLatitude() * 5);</span>
+    }
+
+    @Override
+    public double calculateDeliveryCost() {
+<span class="nc bnc" id="L102" title="All 2 branches missed.">        if (deliveryAddress == null) {</span>
+<span class="nc" id="L103">            return 0; // самовывоз</span>
+        }
+<span class="nc" id="L105">        double distance = deliveryAddress.getLatitude(); // упрощенно</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">        if (distance &lt; 3) return 100;</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">        if (distance &lt; 5) return 150;</span>
+<span class="nc" id="L108">        return 200;</span>
+    }
+
+    public void updateStatus(OrderStatus newStatus) {
+<span class="nc" id="L112">        this.status = newStatus;</span>
+<span class="nc" id="L113">        System.out.println(&quot;Статус заказа #&quot; + id + &quot; изменен на: &quot; + newStatus.getDisplayName());</span>
+<span class="nc" id="L114">    }</span>
+
+    public int getTotalItems() {
+<span class="nc" id="L117">        int total = 0;</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">        for (OrderItem item : items) {</span>
+<span class="nc" id="L119">            total += item.getQuantity();</span>
+<span class="nc" id="L120">        }</span>
+<span class="nc" id="L121">        return total;</span>
+    }
+
+    // Getters and Setters
+<span class="nc" id="L125">    public String getId() { return id; }</span>
+<span class="nc" id="L126">    public void setId(String id) { this.id = id; }</span>
+
+<span class="nc" id="L128">    public Customer getCustomer() { return customer; }</span>
+<span class="nc" id="L129">    public void setCustomer(Customer customer) { this.customer = customer; }</span>
+
+<span class="nc" id="L131">    public List&lt;OrderItem&gt; getItems() { return items; }</span>
+<span class="nc" id="L132">    public void setItems(List&lt;OrderItem&gt; items) { this.items = items; }</span>
+
+<span class="nc" id="L134">    public OrderStatus getStatus() { return status; }</span>
+<span class="nc" id="L135">    public void setStatus(OrderStatus status) { this.status = status; }</span>
+
+<span class="nc" id="L137">    public LocalDateTime getOrderTime() { return orderTime; }</span>
+<span class="nc" id="L138">    public void setOrderTime(LocalDateTime orderTime) { this.orderTime = orderTime; }</span>
+
+<span class="nc" id="L140">    public LocalDateTime getDeliveryTime() { return deliveryTime; }</span>
+<span class="nc" id="L141">    public void setDeliveryTime(LocalDateTime deliveryTime) { this.deliveryTime = deliveryTime; }</span>
+
+<span class="nc" id="L143">    public double getDiscountPercentage() { return discountPercentage; }</span>
+
+<span class="nc" id="L145">    public boolean isPaid() { return isPaid; }</span>
+<span class="nc" id="L146">    public void setPaid(boolean paid) { isPaid = paid; }</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L150">        return String.format(&quot;Заказ #%s - %s (%.2f руб.)&quot;, id, status.getDisplayName(), getFinalPrice());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

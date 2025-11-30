@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PhoneNumber.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lab2</a> &gt; <a href="index.source.html" class="el_package">com.pizzeria.model</a> &gt; <span class="el_source">PhoneNumber.java</span></div><h1>PhoneNumber.java</h1><pre class="source lang-java linenums">package com.pizzeria.model;
+
+/**
+ * Класс телефонного номера
+ */
+public class PhoneNumber {
+    private String countryCode;
+    private String areaCode;
+    private String number;
+
+<span class="fc" id="L11">    public PhoneNumber(String countryCode, String areaCode, String number) {</span>
+<span class="fc" id="L12">        this.countryCode = countryCode;</span>
+<span class="fc" id="L13">        this.areaCode = areaCode;</span>
+<span class="fc" id="L14">        this.number = number;</span>
+<span class="fc" id="L15">    }</span>
+
+<span class="nc" id="L17">    public PhoneNumber(String fullNumber) {</span>
+        // Простая парсинг номера
+<span class="nc bnc" id="L19" title="All 2 branches missed.">        if (fullNumber.startsWith(&quot;+&quot;)) {</span>
+<span class="nc" id="L20">            this.countryCode = fullNumber.substring(0, 2);</span>
+<span class="nc" id="L21">            this.areaCode = fullNumber.substring(2, 5);</span>
+<span class="nc" id="L22">            this.number = fullNumber.substring(5);</span>
+        } else {
+<span class="nc" id="L24">            this.countryCode = &quot;+1&quot;;</span>
+<span class="nc" id="L25">            this.areaCode = &quot;000&quot;;</span>
+<span class="nc" id="L26">            this.number = fullNumber;</span>
+        }
+<span class="nc" id="L28">    }</span>
+
+    public String getFullNumber() {
+<span class="fc" id="L31">        return countryCode + areaCode + number;</span>
+    }
+
+    public boolean isValid() {
+<span class="nc bnc" id="L35" title="All 4 branches missed.">        return number != null &amp;&amp; number.length() &gt;= 7;</span>
+    }
+
+    public String getFormattedNumber() {
+<span class="nc" id="L39">        return String.format(&quot;%s (%s) %s&quot;, countryCode, areaCode, number);</span>
+    }
+
+    // Getters and Setters
+<span class="nc" id="L43">    public String getCountryCode() { return countryCode; }</span>
+<span class="nc" id="L44">    public void setCountryCode(String countryCode) { this.countryCode = countryCode; }</span>
+
+<span class="nc" id="L46">    public String getAreaCode() { return areaCode; }</span>
+<span class="nc" id="L47">    public void setAreaCode(String areaCode) { this.areaCode = areaCode; }</span>
+
+<span class="nc" id="L49">    public String getNumber() { return number; }</span>
+<span class="nc" id="L50">    public void setNumber(String number) { this.number = number; }</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L54">        return getFormattedNumber();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

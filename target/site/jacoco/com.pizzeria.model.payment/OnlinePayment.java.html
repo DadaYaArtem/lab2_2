@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OnlinePayment.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lab2</a> &gt; <a href="index.source.html" class="el_package">com.pizzeria.model.payment</a> &gt; <span class="el_source">OnlinePayment.java</span></div><h1>OnlinePayment.java</h1><pre class="source lang-java linenums">package com.pizzeria.model.payment;
+
+import com.pizzeria.enums.PaymentMethod;
+import com.pizzeria.exceptions.InvalidPaymentException;
+
+/**
+ * Онлайн оплата
+ */
+public class OnlinePayment extends Payment {
+    private String email;
+    private String paymentGateway;
+    private String confirmationCode;
+
+    public OnlinePayment(String transactionId, double amount, String email)
+            throws InvalidPaymentException {
+<span class="nc" id="L16">        super(transactionId, amount, PaymentMethod.ONLINE);</span>
+<span class="nc" id="L17">        this.email = email;</span>
+<span class="nc" id="L18">        this.paymentGateway = &quot;PayPal&quot;; // по умолчанию</span>
+<span class="nc" id="L19">    }</span>
+
+    @Override
+    public boolean process() throws InvalidPaymentException {
+<span class="nc bnc" id="L23" title="All 4 branches missed.">        if (email == null || !email.contains(&quot;@&quot;)) {</span>
+<span class="nc" id="L24">            throw new InvalidPaymentException(amount, &quot;Некорректный email&quot;);</span>
+        }
+
+        // Симуляция онлайн платежа
+<span class="nc" id="L28">        confirmationCode = generateConfirmationCode();</span>
+<span class="nc" id="L29">        System.out.println(&quot;Онлайн платеж обработан через &quot; + paymentGateway);</span>
+<span class="nc" id="L30">        System.out.println(&quot;Код подтверждения: &quot; + confirmationCode);</span>
+<span class="nc" id="L31">        isSuccessful = true;</span>
+<span class="nc" id="L32">        return true;</span>
+    }
+
+    @Override
+    public void refund() throws InvalidPaymentException {
+<span class="nc bnc" id="L37" title="All 2 branches missed.">        if (!isSuccessful) {</span>
+<span class="nc" id="L38">            throw new InvalidPaymentException(&quot;Возврат невозможен - платеж не был успешным&quot;);</span>
+        }
+<span class="nc" id="L40">        System.out.println(&quot;Возврат &quot; + amount + &quot; руб. на &quot; + email);</span>
+<span class="nc" id="L41">        isSuccessful = false;</span>
+<span class="nc" id="L42">    }</span>
+
+    private String generateConfirmationCode() {
+<span class="nc" id="L45">        return &quot;CONF-&quot; + System.currentTimeMillis();</span>
+    }
+
+    public boolean verifyConfirmationCode(String code) {
+<span class="nc bnc" id="L49" title="All 4 branches missed.">        return confirmationCode != null &amp;&amp; confirmationCode.equals(code);</span>
+    }
+
+    // Getters and Setters
+<span class="nc" id="L53">    public String getEmail() { return email; }</span>
+<span class="nc" id="L54">    public void setEmail(String email) { this.email = email; }</span>
+
+<span class="nc" id="L56">    public String getPaymentGateway() { return paymentGateway; }</span>
+<span class="nc" id="L57">    public void setPaymentGateway(String paymentGateway) { this.paymentGateway = paymentGateway; }</span>
+
+<span class="nc" id="L59">    public String getConfirmationCode() { return confirmationCode; }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

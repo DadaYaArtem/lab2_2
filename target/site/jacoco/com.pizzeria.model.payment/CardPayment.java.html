@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CardPayment.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lab2</a> &gt; <a href="index.source.html" class="el_package">com.pizzeria.model.payment</a> &gt; <span class="el_source">CardPayment.java</span></div><h1>CardPayment.java</h1><pre class="source lang-java linenums">package com.pizzeria.model.payment;
+
+import com.pizzeria.enums.PaymentMethod;
+import com.pizzeria.exceptions.InvalidPaymentException;
+
+/**
+ * Оплата картой
+ */
+public class CardPayment extends Payment {
+    private String cardNumber;
+    private String cardHolderName;
+    private String cvv;
+    private String expiryDate;
+
+    public CardPayment(String transactionId, double amount, String cardNumber)
+            throws InvalidPaymentException {
+<span class="fc" id="L17">        super(transactionId, amount, PaymentMethod.CARD);</span>
+<span class="fc" id="L18">        this.cardNumber = maskCardNumber(cardNumber);</span>
+<span class="fc" id="L19">    }</span>
+
+    @Override
+    public boolean process() throws InvalidPaymentException {
+<span class="pc bpc" id="L23" title="1 of 2 branches missed.">        if (!validateCard()) {</span>
+<span class="nc" id="L24">            throw new InvalidPaymentException(amount, &quot;Некорректные данные карты&quot;);</span>
+        }
+
+        // Симуляция обработки платежа
+<span class="fc" id="L28">        System.out.println(&quot;Обработка платежа картой: &quot; + cardNumber);</span>
+<span class="fc" id="L29">        isSuccessful = true;</span>
+<span class="fc" id="L30">        return true;</span>
+    }
+
+    @Override
+    public void refund() throws InvalidPaymentException {
+<span class="fc bfc" id="L35" title="All 2 branches covered.">        if (!isSuccessful) {</span>
+<span class="fc" id="L36">            throw new InvalidPaymentException(&quot;Возврат невозможен - платеж не был успешным&quot;);</span>
+        }
+<span class="fc" id="L38">        System.out.println(&quot;Возврат &quot; + amount + &quot; руб. на карту &quot; + cardNumber);</span>
+<span class="fc" id="L39">        isSuccessful = false;</span>
+<span class="fc" id="L40">    }</span>
+
+    private boolean validateCard() {
+        // Упрощенная валидация
+<span class="pc bpc" id="L44" title="2 of 4 branches missed.">        return cardNumber != null &amp;&amp; cardNumber.length() &gt;= 16;</span>
+    }
+
+    private String maskCardNumber(String cardNumber) {
+<span class="pc bpc" id="L48" title="1 of 4 branches missed.">        if (cardNumber == null || cardNumber.length() &lt; 4) {</span>
+<span class="fc" id="L49">            return &quot;****&quot;;</span>
+        }
+<span class="fc" id="L51">        return &quot;**** **** **** &quot; + cardNumber.substring(cardNumber.length() - 4);</span>
+    }
+
+    public boolean verifyPin(String pin) {
+        // Упрощенная проверка PIN
+<span class="fc bfc" id="L56" title="All 4 branches covered.">        return pin != null &amp;&amp; pin.length() == 4;</span>
+    }
+
+    // Getters and Setters
+<span class="fc" id="L60">    public String getCardNumber() { return cardNumber; }</span>
+<span class="fc" id="L61">    public void setCardNumber(String cardNumber) { this.cardNumber = maskCardNumber(cardNumber); }</span>
+
+<span class="fc" id="L63">    public String getCardHolderName() { return cardHolderName; }</span>
+<span class="fc" id="L64">    public void setCardHolderName(String cardHolderName) { this.cardHolderName = cardHolderName; }</span>
+
+<span class="fc" id="L66">    public String getExpiryDate() { return expiryDate; }</span>
+<span class="fc" id="L67">    public void setExpiryDate(String expiryDate) { this.expiryDate = expiryDate; }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

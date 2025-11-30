@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DeliveryDriver.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lab2</a> &gt; <a href="index.source.html" class="el_package">com.pizzeria.model.users</a> &gt; <span class="el_source">DeliveryDriver.java</span></div><h1>DeliveryDriver.java</h1><pre class="source lang-java linenums">package com.pizzeria.model.users;
+
+import com.pizzeria.enums.EmployeeRole;
+import com.pizzeria.model.Address;
+
+/**
+ * Класс водителя доставки
+ */
+public class DeliveryDriver extends Employee {
+    private String vehicleType;
+    private String vehicleNumber;
+    private boolean isAvailable;
+    private int deliveriesCompleted;
+
+    public DeliveryDriver(String id, String firstName, String lastName, double salary) {
+<span class="nc" id="L16">        super(id, firstName, lastName, EmployeeRole.DELIVERY_DRIVER, salary);</span>
+<span class="nc" id="L17">        this.isAvailable = true;</span>
+<span class="nc" id="L18">        this.deliveriesCompleted = 0;</span>
+<span class="nc" id="L19">    }</span>
+
+    @Override
+    public String getRole() {
+<span class="nc" id="L23">        return &quot;Водитель доставки&quot;;</span>
+    }
+
+    @Override
+    public void performDuty() {
+<span class="nc" id="L28">        System.out.println(getFullName() + &quot; доставляет заказы&quot;);</span>
+<span class="nc" id="L29">    }</span>
+
+    public int calculateDeliveryTime(Address from, Address to) {
+<span class="nc" id="L32">        double distance = from.calculateDistance(to);</span>
+<span class="nc" id="L33">        return (int)(distance / 0.5); // 30 км/ч средняя скорость</span>
+    }
+
+    public void startDelivery() {
+<span class="nc" id="L37">        isAvailable = false;</span>
+<span class="nc" id="L38">        System.out.println(getFullName() + &quot; начал доставку&quot;);</span>
+<span class="nc" id="L39">    }</span>
+
+    public void completeDelivery() {
+<span class="nc" id="L42">        isAvailable = true;</span>
+<span class="nc" id="L43">        deliveriesCompleted++;</span>
+<span class="nc" id="L44">        System.out.println(getFullName() + &quot; завершил доставку&quot;);</span>
+<span class="nc" id="L45">    }</span>
+
+    public double calculateDeliveryBonus() {
+<span class="nc" id="L48">        return deliveriesCompleted * 50.0; // 50 руб за доставку</span>
+    }
+
+    // Getters and Setters
+<span class="nc" id="L52">    public String getVehicleType() { return vehicleType; }</span>
+<span class="nc" id="L53">    public void setVehicleType(String vehicleType) { this.vehicleType = vehicleType; }</span>
+
+<span class="nc" id="L55">    public String getVehicleNumber() { return vehicleNumber; }</span>
+<span class="nc" id="L56">    public void setVehicleNumber(String vehicleNumber) { this.vehicleNumber = vehicleNumber; }</span>
+
+<span class="nc" id="L58">    public boolean isAvailable() { return isAvailable; }</span>
+<span class="nc" id="L59">    public void setAvailable(boolean available) { isAvailable = available; }</span>
+
+<span class="nc" id="L61">    public int getDeliveriesCompleted() { return deliveriesCompleted; }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Waiter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lab2</a> &gt; <a href="index.source.html" class="el_package">com.pizzeria.model.users</a> &gt; <span class="el_source">Waiter.java</span></div><h1>Waiter.java</h1><pre class="source lang-java linenums">package com.pizzeria.model.users;
+
+import com.pizzeria.enums.EmployeeRole;
+import com.pizzeria.model.Order;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Класс официанта
+ */
+public class Waiter extends Employee {
+    private List&lt;Order&gt; currentOrders;
+    private double tips;
+
+    public Waiter(String id, String firstName, String lastName, double salary) {
+<span class="nc" id="L17">        super(id, firstName, lastName, EmployeeRole.WAITER, salary);</span>
+<span class="nc" id="L18">        this.currentOrders = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L19">        this.tips = 0;</span>
+<span class="nc" id="L20">    }</span>
+
+    @Override
+    public String getRole() {
+<span class="nc" id="L24">        return &quot;Официант&quot;;</span>
+    }
+
+    @Override
+    public void performDuty() {
+<span class="nc" id="L29">        System.out.println(getFullName() + &quot; обслуживает столики&quot;);</span>
+<span class="nc" id="L30">    }</span>
+
+    public void takeOrder(Order order) {
+<span class="nc" id="L33">        currentOrders.add(order);</span>
+<span class="nc" id="L34">        System.out.println(getFullName() + &quot; принял заказ #&quot; + order.getId());</span>
+<span class="nc" id="L35">    }</span>
+
+    public void serveOrder(Order order) {
+<span class="nc" id="L38">        currentOrders.remove(order);</span>
+<span class="nc" id="L39">        System.out.println(getFullName() + &quot; подал заказ #&quot; + order.getId());</span>
+<span class="nc" id="L40">    }</span>
+
+    public void receiveTip(double amount) {
+<span class="nc" id="L43">        tips += amount;</span>
+<span class="nc" id="L44">    }</span>
+
+    public double getTotalEarnings() {
+<span class="nc" id="L47">        return salary + tips;</span>
+    }
+
+    public boolean isBusy() {
+<span class="nc bnc" id="L51" title="All 2 branches missed.">        return currentOrders.size() &gt; 5;</span>
+    }
+
+    // Getters and Setters
+<span class="nc" id="L55">    public List&lt;Order&gt; getCurrentOrders() { return currentOrders; }</span>
+
+<span class="nc" id="L57">    public double getTips() { return tips; }</span>
+<span class="nc" id="L58">    public void setTips(double tips) { this.tips = tips; }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

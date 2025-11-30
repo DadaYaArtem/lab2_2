@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Dough.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lab2</a> &gt; <a href="index.source.html" class="el_package">com.pizzeria.model.ingredients</a> &gt; <span class="el_source">Dough.java</span></div><h1>Dough.java</h1><pre class="source lang-java linenums">package com.pizzeria.model.ingredients;
+
+import com.pizzeria.exceptions.InvalidPriceException;
+
+/**
+ * Класс теста
+ */
+public class Dough extends Ingredient {
+    private String doughType;
+    private int thickness;
+    private boolean isGlutenFree;
+
+    public Dough(String name, double pricePerUnit, String doughType) throws InvalidPriceException {
+<span class="fc" id="L14">        super(name, pricePerUnit, &quot;грамм&quot;);</span>
+<span class="fc" id="L15">        this.doughType = doughType;</span>
+<span class="fc" id="L16">        this.isVegetarian = true;</span>
+<span class="fc" id="L17">        this.calories = 270;</span>
+<span class="fc" id="L18">    }</span>
+
+    @Override
+    public String getCategory() {
+<span class="fc" id="L22">        return &quot;Тесто&quot;;</span>
+    }
+
+    public int getPreparationTime() {
+<span class="fc bfc" id="L26" title="All 2 branches covered.">        if (doughType.equalsIgnoreCase(&quot;Дрожжевое&quot;)) {</span>
+<span class="fc" id="L27">            return 60; // минут для подъема</span>
+        }
+<span class="fc" id="L29">        return 30;</span>
+    }
+
+    public boolean isCrispy() {
+<span class="fc bfc" id="L33" title="All 2 branches covered.">        return thickness &lt; 3;</span>
+    }
+
+    // Getters and Setters
+<span class="fc" id="L37">    public String getDoughType() { return doughType; }</span>
+<span class="fc" id="L38">    public void setDoughType(String doughType) { this.doughType = doughType; }</span>
+
+<span class="fc" id="L40">    public int getThickness() { return thickness; }</span>
+<span class="fc" id="L41">    public void setThickness(int thickness) { this.thickness = thickness; }</span>
+
+<span class="fc" id="L43">    public boolean isGlutenFree() { return isGlutenFree; }</span>
+<span class="fc" id="L44">    public void setGlutenFree(boolean glutenFree) { isGlutenFree = glutenFree; }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Main.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lab2</a> &gt; <a href="index.source.html" class="el_package">com.pizzeria</a> &gt; <span class="el_source">Main.java</span></div><h1>Main.java</h1><pre class="source lang-java linenums">package com.pizzeria;
+
+import com.pizzeria.enums.*;
+import com.pizzeria.exceptions.*;
+import com.pizzeria.factory.*;
+import com.pizzeria.model.*;
+import com.pizzeria.model.ingredients.*;
+import com.pizzeria.model.payment.*;
+import com.pizzeria.model.products.*;
+import com.pizzeria.model.users.*;
+import com.pizzeria.service.*;
+import com.pizzeria.strategy.*;
+import com.pizzeria.util.*;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+/**
+ * Главный класс приложения - Система управления пиццерией
+ * Демонстрация работы ООП системы с применением SOLID и GRASP принципов
+ */
+<span class="nc" id="L22">public class Main {</span>
+
+    public static void main(String[] args) {
+<span class="nc" id="L25">        System.out.println(&quot;=================================================&quot;);</span>
+<span class="nc" id="L26">        System.out.println(&quot;   СИСТЕМА УПРАВЛЕНИЯ ПИЦЦЕРИЕЙ - ДЕМО&quot;);</span>
+<span class="nc" id="L27">        System.out.println(&quot;=================================================\n&quot;);</span>
+
+        try {
+            // 1. Инициализация системы
+<span class="nc" id="L31">            System.out.println(&quot;1. ИНИЦИАЛИЗАЦИЯ СИСТЕМЫ&quot;);</span>
+<span class="nc" id="L32">            System.out.println(&quot;-------------------------------------------------&quot;);</span>
+
+            // Создание адреса пиццерии
+<span class="nc" id="L35">            Address pizzeriaAddress = new Address(&quot;Пушкина&quot;, &quot;10&quot;, &quot;Москва&quot;, &quot;101000&quot;);</span>
+<span class="nc" id="L36">            pizzeriaAddress.setLatitude(55.7558);</span>
+<span class="nc" id="L37">            pizzeriaAddress.setLongitude(37.6173);</span>
+
+            // Создание пиццерии
+<span class="nc" id="L40">            Pizzeria pizzeria = new Pizzeria(&quot;Bella Italia&quot;, pizzeriaAddress);</span>
+<span class="nc" id="L41">            pizzeria.setWorkingHours(&quot;10:00 - 23:00&quot;);</span>
+<span class="nc" id="L42">            pizzeria.open();</span>
+
+            // Создание инвентаря
+<span class="nc" id="L45">            Inventory inventory = new Inventory();</span>
+
+            // Создание кухни
+<span class="nc" id="L48">            Kitchen kitchen = new Kitchen(inventory);</span>
+<span class="nc" id="L49">            pizzeria.setKitchen(kitchen);</span>
+
+            // 2. Добавление ингредиентов
+<span class="nc" id="L52">            System.out.println(&quot;\n2. ДОБАВЛЕНИЕ ИНГРЕДИЕНТОВ&quot;);</span>
+<span class="nc" id="L53">            System.out.println(&quot;-------------------------------------------------&quot;);</span>
+
+<span class="nc" id="L55">            IngredientFactory ingredientFactory = new IngredientFactory();</span>
+
+<span class="nc" id="L57">            Cheese mozzarella = ingredientFactory.createCheese(&quot;Моцарелла&quot;);</span>
+<span class="nc" id="L58">            Cheese parmesan = ingredientFactory.createCheese(&quot;Пармезан&quot;);</span>
+<span class="nc" id="L59">            Meat pepperoni = ingredientFactory.createMeat(&quot;Пепперони&quot;);</span>
+<span class="nc" id="L60">            Meat chicken = ingredientFactory.createMeat(&quot;Курица&quot;);</span>
+<span class="nc" id="L61">            Vegetable tomatoes = ingredientFactory.createVegetable(&quot;Помидоры&quot;);</span>
+<span class="nc" id="L62">            Vegetable mushrooms = ingredientFactory.createVegetable(&quot;Грибы&quot;);</span>
+<span class="nc" id="L63">            Sauce tomatoSauce = ingredientFactory.createSauce(&quot;Томатный&quot;);</span>
+<span class="nc" id="L64">            Dough thinDough = ingredientFactory.createDough(&quot;Тонкое&quot;);</span>
+
+<span class="nc" id="L66">            inventory.addIngredient(mozzarella);</span>
+<span class="nc" id="L67">            inventory.addIngredient(parmesan);</span>
+<span class="nc" id="L68">            inventory.addIngredient(pepperoni);</span>
+<span class="nc" id="L69">            inventory.addIngredient(chicken);</span>
+<span class="nc" id="L70">            inventory.addIngredient(tomatoes);</span>
+<span class="nc" id="L71">            inventory.addIngredient(mushrooms);</span>
+<span class="nc" id="L72">            inventory.addIngredient(tomatoSauce);</span>
+<span class="nc" id="L73">            inventory.addIngredient(thinDough);</span>
+
+            // 3. Создание сотрудников
+<span class="nc" id="L76">            System.out.println(&quot;\n3. НАЙМ СОТРУДНИКОВ&quot;);</span>
+<span class="nc" id="L77">            System.out.println(&quot;-------------------------------------------------&quot;);</span>
+
+<span class="nc" id="L79">            Manager manager = new Manager(&quot;MGR001&quot;, &quot;Иван&quot;, &quot;Петров&quot;, 80000);</span>
+<span class="nc" id="L80">            Chef chef1 = new Chef(&quot;CHF001&quot;, &quot;Марио&quot;, &quot;Росси&quot;, 60000);</span>
+<span class="nc" id="L81">            chef1.setSpecialty(&quot;Итальянская пицца&quot;);</span>
+<span class="nc" id="L82">            chef1.setExperienceYears(5);</span>
+
+<span class="nc" id="L84">            Chef chef2 = new Chef(&quot;CHF002&quot;, &quot;Луиджи&quot;, &quot;Бьянки&quot;, 55000);</span>
+<span class="nc" id="L85">            chef2.setExperienceYears(3);</span>
+
+<span class="nc" id="L87">            Waiter waiter = new Waiter(&quot;WTR001&quot;, &quot;Анна&quot;, &quot;Смирнова&quot;, 35000);</span>
+<span class="nc" id="L88">            DeliveryDriver driver = new DeliveryDriver(&quot;DRV001&quot;, &quot;Петр&quot;, &quot;Иванов&quot;, 40000);</span>
+<span class="nc" id="L89">            driver.setVehicleType(&quot;Мотоцикл&quot;);</span>
+<span class="nc" id="L90">            driver.setVehicleNumber(&quot;А123ВС&quot;);</span>
+
+<span class="nc" id="L92">            pizzeria.setManager(manager);</span>
+<span class="nc" id="L93">            pizzeria.hireEmployee(manager);</span>
+<span class="nc" id="L94">            pizzeria.hireEmployee(chef1);</span>
+<span class="nc" id="L95">            pizzeria.hireEmployee(chef2);</span>
+<span class="nc" id="L96">            pizzeria.hireEmployee(waiter);</span>
+<span class="nc" id="L97">            pizzeria.hireEmployee(driver);</span>
+
+<span class="nc" id="L99">            kitchen.addChef(chef1);</span>
+<span class="nc" id="L100">            kitchen.addChef(chef2);</span>
+
+            // 4. Создание меню
+<span class="nc" id="L103">            System.out.println(&quot;\n4. СОЗДАНИЕ МЕНЮ&quot;);</span>
+<span class="nc" id="L104">            System.out.println(&quot;-------------------------------------------------&quot;);</span>
+
+<span class="nc" id="L106">            Menu menu = new Menu(&quot;Основное меню&quot;);</span>
+<span class="nc" id="L107">            PizzaFactory pizzaFactory = new PizzaFactory();</span>
+
+            // Создание пицц разных размеров
+<span class="nc" id="L110">            Pizza margherita = pizzaFactory.createPizza(&quot;маргарита&quot;, PizzaSize.MEDIUM);</span>
+<span class="nc" id="L111">            margherita.addIngredient(mozzarella);</span>
+<span class="nc" id="L112">            margherita.addIngredient(tomatoSauce);</span>
+<span class="nc" id="L113">            margherita.addIngredient(thinDough);</span>
+
+<span class="nc" id="L115">            Pizza pepperoniPizza = pizzaFactory.createPizza(&quot;пепперони&quot;, PizzaSize.LARGE);</span>
+<span class="nc" id="L116">            pepperoniPizza.addIngredient(mozzarella);</span>
+<span class="nc" id="L117">            pepperoniPizza.addIngredient(pepperoni);</span>
+<span class="nc" id="L118">            pepperoniPizza.addIngredient(tomatoSauce);</span>
+
+<span class="nc" id="L120">            Pizza veggiePizza = pizzaFactory.createPizza(&quot;вегетарианская&quot;, PizzaSize.MEDIUM);</span>
+<span class="nc" id="L121">            veggiePizza.addIngredient(tomatoes);</span>
+<span class="nc" id="L122">            veggiePizza.addIngredient(mushrooms);</span>
+
+            // Добавление напитков и десертов
+<span class="nc" id="L125">            Drink cola = new Drink(&quot;Кока-кола&quot;, 100.0, 500);</span>
+<span class="nc" id="L126">            cola.setCarbonated(true);</span>
+<span class="nc" id="L127">            cola.chill();</span>
+
+<span class="nc" id="L129">            Dessert tiramisu = new Dessert(&quot;Тирамису&quot;, 250.0, 150);</span>
+
+<span class="nc" id="L131">            menu.addProduct(margherita);</span>
+<span class="nc" id="L132">            menu.addProduct(pepperoniPizza);</span>
+<span class="nc" id="L133">            menu.addProduct(veggiePizza);</span>
+<span class="nc" id="L134">            menu.addProduct(cola);</span>
+<span class="nc" id="L135">            menu.addProduct(tiramisu);</span>
+
+<span class="nc" id="L137">            pizzeria.setMenu(menu);</span>
+<span class="nc" id="L138">            menu.displayMenu();</span>
+
+            // 5. Создание клиента
+<span class="nc" id="L141">            System.out.println(&quot;\n5. РЕГИСТРАЦИЯ КЛИЕНТА&quot;);</span>
+<span class="nc" id="L142">            System.out.println(&quot;-------------------------------------------------&quot;);</span>
+
+<span class="nc" id="L144">            Customer customer = new Customer(&quot;CUST001&quot;, &quot;Алексей&quot;, &quot;Николаев&quot;);</span>
+<span class="nc" id="L145">            customer.setPhoneNumber(new PhoneNumber(&quot;+7&quot;, &quot;495&quot;, &quot;1234567&quot;));</span>
+<span class="nc" id="L146">            customer.setEmail(new Email(&quot;alexey&quot;, &quot;example.com&quot;));</span>
+
+<span class="nc" id="L148">            Address customerAddress = new Address(&quot;Ленина&quot;, &quot;25&quot;, &quot;Москва&quot;, &quot;102000&quot;);</span>
+<span class="nc" id="L149">            customerAddress.setApartmentNumber(&quot;42&quot;);</span>
+<span class="nc" id="L150">            customerAddress.setLatitude(55.7500);</span>
+<span class="nc" id="L151">            customerAddress.setLongitude(37.6200);</span>
+<span class="nc" id="L152">            customer.setAddress(customerAddress);</span>
+
+            // Создание карты лояльности
+<span class="nc" id="L155">            LoyaltyCard loyaltyCard = new LoyaltyCard(&quot;LOYAL-001&quot;);</span>
+<span class="nc" id="L156">            loyaltyCard.addPoints(150);</span>
+<span class="nc" id="L157">            customer.setLoyaltyCard(loyaltyCard);</span>
+
+<span class="nc" id="L159">            System.out.println(&quot;Клиент зарегистрирован: &quot; + customer.getFullName());</span>
+<span class="nc" id="L160">            System.out.println(&quot;Карта лояльности: &quot; + loyaltyCard.getTier() +</span>
+<span class="nc" id="L161">                             &quot; (Скидка: &quot; + loyaltyCard.getDiscountAmount() + &quot;%)&quot;);</span>
+
+            // 6. Создание заказа
+<span class="nc" id="L164">            System.out.println(&quot;\n6. СОЗДАНИЕ ЗАКАЗА&quot;);</span>
+<span class="nc" id="L165">            System.out.println(&quot;-------------------------------------------------&quot;);</span>
+
+<span class="nc" id="L167">            OrderService orderService = new OrderService();</span>
+<span class="nc" id="L168">            Order order = orderService.createOrder(customer);</span>
+
+            // Добавление товаров в заказ
+<span class="nc" id="L171">            order.addItem(pepperoniPizza, 2);</span>
+<span class="nc" id="L172">            order.addItem(margherita, 1);</span>
+<span class="nc" id="L173">            order.addItem(cola, 3);</span>
+<span class="nc" id="L174">            order.addItem(tiramisu, 2);</span>
+
+            // Применение скидки по карте лояльности
+<span class="nc bnc" id="L177" title="All 2 branches missed.">            if (loyaltyCard.isDiscountApplicable()) {</span>
+<span class="nc" id="L178">                order.applyDiscount(loyaltyCard.getDiscountAmount());</span>
+<span class="nc" id="L179">                System.out.println(&quot;Применена скидка: &quot; + loyaltyCard.getDiscountAmount() + &quot;%&quot;);</span>
+            }
+
+<span class="nc" id="L182">            System.out.println(&quot;Заказ создан: &quot; + order);</span>
+<span class="nc" id="L183">            System.out.println(&quot;Количество товаров: &quot; + order.getTotalItems());</span>
+<span class="nc" id="L184">            System.out.println(&quot;Сумма заказа: &quot; + PriceCalculator.formatPrice(order.getPrice()));</span>
+<span class="nc" id="L185">            System.out.println(&quot;Итого к оплате: &quot; + PriceCalculator.formatPrice(order.getFinalPrice()));</span>
+
+            // 7. Валидация заказа
+<span class="nc" id="L188">            System.out.println(&quot;\n7. ВАЛИДАЦИЯ ЗАКАЗА&quot;);</span>
+<span class="nc" id="L189">            System.out.println(&quot;-------------------------------------------------&quot;);</span>
+
+<span class="nc bnc" id="L191" title="All 2 branches missed.">            if (OrderValidator.validateOrder(order)) {</span>
+<span class="nc" id="L192">                System.out.println(&quot;✓ Заказ прошел валидацию&quot;);</span>
+            }
+
+            // Установка адреса доставки
+<span class="nc" id="L196">            order.setDeliveryAddress(customerAddress);</span>
+<span class="nc" id="L197">            System.out.println(&quot;Адрес доставки: &quot; + customerAddress);</span>
+<span class="nc" id="L198">            System.out.println(&quot;Время доставки: &quot; + order.calculateDeliveryTime() + &quot; мин&quot;);</span>
+<span class="nc" id="L199">            System.out.println(&quot;Стоимость доставки: &quot; +</span>
+<span class="nc" id="L200">                             PriceCalculator.formatPrice(order.calculateDeliveryCost()));</span>
+
+            // 8. Обработка оплаты
+<span class="nc" id="L203">            System.out.println(&quot;\n8. ОБРАБОТКА ПЛАТЕЖА&quot;);</span>
+<span class="nc" id="L204">            System.out.println(&quot;-------------------------------------------------&quot;);</span>
+
+<span class="nc" id="L206">            PaymentFactory paymentFactory = new PaymentFactory();</span>
+<span class="nc" id="L207">            PaymentService paymentService = new PaymentService();</span>
+
+            // Оплата картой
+<span class="nc" id="L210">            CardPayment cardPayment = paymentFactory.createCardPayment(</span>
+<span class="nc" id="L211">                order.getFinalPrice(), &quot;4532123456789012&quot;);</span>
+<span class="nc" id="L212">            cardPayment.setCardHolderName(customer.getFullName());</span>
+<span class="nc" id="L213">            cardPayment.setExpiryDate(&quot;12/25&quot;);</span>
+
+<span class="nc" id="L215">            Receipt receipt = paymentService.processPayment(order, cardPayment);</span>
+
+<span class="nc" id="L217">            System.out.println(&quot;Платеж успешно обработан&quot;);</span>
+<span class="nc" id="L218">            System.out.println(&quot;ID транзакции: &quot; + cardPayment.getTransactionId());</span>
+
+            // 9. Приготовление заказа
+<span class="nc" id="L221">            System.out.println(&quot;\n9. ПРИГОТОВЛЕНИЕ ЗАКАЗА НА КУХНЕ&quot;);</span>
+<span class="nc" id="L222">            System.out.println(&quot;-------------------------------------------------&quot;);</span>
+
+<span class="nc" id="L224">            order.updateStatus(OrderStatus.PREPARING);</span>
+<span class="nc" id="L225">            waiter.takeOrder(order);</span>
+
+            // Повар готовит пиццы
+<span class="nc bnc" id="L228" title="All 2 branches missed.">            for (OrderItem item : order.getItems()) {</span>
+<span class="nc bnc" id="L229" title="All 2 branches missed.">                if (item.getProduct() instanceof Pizza) {</span>
+<span class="nc" id="L230">                    Pizza pizza = (Pizza) item.getProduct();</span>
+<span class="nc" id="L231">                    System.out.println(&quot;\nПриготовление: &quot; + pizza.getName());</span>
+<span class="nc" id="L232">                    int cookingTime = chef1.cookPizza(pizza);</span>
+<span class="nc" id="L233">                    System.out.println(&quot;Время приготовления: &quot; + cookingTime + &quot; мин&quot;);</span>
+<span class="nc" id="L234">                    System.out.println(&quot;Калории: &quot; + pizza.getCalories());</span>
+                }
+<span class="nc" id="L236">            }</span>
+
+<span class="nc" id="L238">            order.updateStatus(OrderStatus.READY);</span>
+<span class="nc" id="L239">            waiter.serveOrder(order);</span>
+
+            // 10. Доставка
+<span class="nc" id="L242">            System.out.println(&quot;\n10. ОРГАНИЗАЦИЯ ДОСТАВКИ&quot;);</span>
+<span class="nc" id="L243">            System.out.println(&quot;-------------------------------------------------&quot;);</span>
+
+<span class="nc" id="L245">            DeliveryService deliveryService = new DeliveryService();</span>
+<span class="nc" id="L246">            deliveryService.addDriver(driver);</span>
+
+<span class="nc" id="L248">            DeliveryDriver availableDriver = deliveryService.findAvailableDriver();</span>
+<span class="nc bnc" id="L249" title="All 2 branches missed.">            if (availableDriver != null) {</span>
+<span class="nc" id="L250">                order.updateStatus(OrderStatus.IN_DELIVERY);</span>
+
+<span class="nc" id="L252">                DeliveryInfo delivery = deliveryService.scheduleDelivery(order, availableDriver);</span>
+<span class="nc" id="L253">                System.out.println(&quot;Трек-номер: &quot; + delivery.getTrackingNumber());</span>
+<span class="nc" id="L254">                System.out.println(&quot;Ожидаемое время доставки: &quot; + delivery.getEstimatedTime() + &quot; мин&quot;);</span>
+
+                // Симуляция завершения доставки
+<span class="nc" id="L257">                deliveryService.completeDelivery(delivery);</span>
+<span class="nc" id="L258">                order.updateStatus(OrderStatus.DELIVERED);</span>
+
+                // Чаевые водителю
+<span class="nc" id="L261">                double tip = PriceCalculator.calculateTip(order.getFinalPrice(), 10);</span>
+<span class="nc" id="L262">                waiter.receiveTip(tip);</span>
+<span class="nc" id="L263">                System.out.println(&quot;Чаевые: &quot; + PriceCalculator.formatPrice(tip));</span>
+            }
+
+            // 11. Работа с промо-кодами и акциями
+<span class="nc" id="L267">            System.out.println(&quot;\n11. РАБОТА С ПРОМО-КОДАМИ&quot;);</span>
+<span class="nc" id="L268">            System.out.println(&quot;-------------------------------------------------&quot;);</span>
+
+<span class="nc" id="L270">            Discount discount = new Discount(&quot;PIZZA20&quot;, 20.0);</span>
+<span class="nc" id="L271">            discount.setUsageLimit(10);</span>
+
+<span class="nc bnc" id="L273" title="All 2 branches missed.">            if (discount.isDiscountApplicable()) {</span>
+<span class="nc" id="L274">                System.out.println(&quot;Промо-код '&quot; + discount.getCode() + &quot;' активен&quot;);</span>
+<span class="nc" id="L275">                System.out.println(&quot;Скидка: &quot; + discount.getDiscountAmount() + &quot;%&quot;);</span>
+<span class="nc" id="L276">                discount.use();</span>
+            }
+
+<span class="nc" id="L279">            Promotion promotion = new Promotion(&quot;Счастливые часы&quot;, 15.0);</span>
+<span class="nc" id="L280">            promotion.setDescription(&quot;15% скидка с 14:00 до 16:00&quot;);</span>
+
+<span class="nc bnc" id="L282" title="All 2 branches missed.">            if (promotion.isValid()) {</span>
+<span class="nc" id="L283">                System.out.println(&quot;Акция '&quot; + promotion.getName() + &quot;' активна&quot;);</span>
+<span class="nc" id="L284">                System.out.println(promotion.getDescription());</span>
+            }
+
+            // 12. Расписание работы
+<span class="nc" id="L288">            System.out.println(&quot;\n12. УПРАВЛЕНИЕ РАСПИСАНИЕМ&quot;);</span>
+<span class="nc" id="L289">            System.out.println(&quot;-------------------------------------------------&quot;);</span>
+
+<span class="nc" id="L291">            WorkSchedule schedule = new WorkSchedule();</span>
+<span class="nc" id="L292">            Shift morningShift = new Shift(LocalTime.of(9, 0), LocalTime.of(17, 0));</span>
+<span class="nc" id="L293">            Shift eveningShift = new Shift(LocalTime.of(17, 0), LocalTime.of(1, 0));</span>
+
+<span class="nc" id="L295">            LocalDate today = LocalDate.now();</span>
+<span class="nc" id="L296">            schedule.addShift(today, chef1, morningShift);</span>
+<span class="nc" id="L297">            schedule.addShift(today, waiter, eveningShift);</span>
+
+<span class="nc" id="L299">            System.out.println(&quot;Смены на сегодня запланированы&quot;);</span>
+
+            // 13. Использование Strategy Pattern для ценообразования
+<span class="nc" id="L302">            System.out.println(&quot;\n13. СТРАТЕГИИ ЦЕНООБРАЗОВАНИЯ&quot;);</span>
+<span class="nc" id="L303">            System.out.println(&quot;-------------------------------------------------&quot;);</span>
+
+<span class="nc" id="L305">            PriceCalculationStrategy standardStrategy = new StandardPricingStrategy();</span>
+<span class="nc" id="L306">            PriceCalculationStrategy discountStrategy = new DiscountPricingStrategy(15.0);</span>
+<span class="nc" id="L307">            PriceCalculationStrategy premiumStrategy = new PremiumPricingStrategy(200.0);</span>
+
+<span class="nc" id="L309">            System.out.println(&quot;Стандартная цена: &quot; +</span>
+<span class="nc" id="L310">                             PriceCalculator.formatPrice(standardStrategy.calculatePrice(order)));</span>
+<span class="nc" id="L311">            System.out.println(&quot;Цена со скидкой 15%: &quot; +</span>
+<span class="nc" id="L312">                             PriceCalculator.formatPrice(discountStrategy.calculatePrice(order)));</span>
+<span class="nc" id="L313">            System.out.println(&quot;Премиум цена (+ сервисный сбор): &quot; +</span>
+<span class="nc" id="L314">                             PriceCalculator.formatPrice(premiumStrategy.calculatePrice(order)));</span>
+
+            // 15. Отчеты
+<span class="nc" id="L317">            System.out.println(&quot;\n15. ГЕНЕРАЦИЯ ОТЧЕТОВ&quot;);</span>
+<span class="nc" id="L318">            System.out.println(&quot;-------------------------------------------------&quot;);</span>
+
+<span class="nc" id="L320">            pizzeria.addOrder(order);</span>
+
+<span class="nc" id="L322">            String salesReport = ReportGenerator.generateDailySalesReport(pizzeria, today);</span>
+<span class="nc" id="L323">            System.out.println(salesReport);</span>
+
+<span class="nc" id="L325">            String employeeReport = ReportGenerator.generateEmployeeReport(chef1);</span>
+<span class="nc" id="L326">            System.out.println(employeeReport);</span>
+
+            // 16. Статистика пиццерии
+<span class="nc" id="L329">            System.out.println(&quot;\n16. СТАТИСТИКА ПИЦЦЕРИИ&quot;);</span>
+<span class="nc" id="L330">            System.out.println(&quot;-------------------------------------------------&quot;);</span>
+
+<span class="nc" id="L332">            System.out.println(&quot;Название: &quot; + pizzeria.getName());</span>
+<span class="nc" id="L333">            System.out.println(&quot;Адрес: &quot; + pizzeria.getAddress());</span>
+<span class="nc" id="L334">            System.out.println(&quot;Часы работы: &quot; + pizzeria.getWorkingHours());</span>
+<span class="nc bnc" id="L335" title="All 2 branches missed.">            System.out.println(&quot;Статус: &quot; + (pizzeria.isOpen() ? &quot;Открыта&quot; : &quot;Закрыта&quot;));</span>
+<span class="nc" id="L336">            System.out.println(&quot;Всего сотрудников: &quot; + pizzeria.getActiveEmployees().size());</span>
+<span class="nc" id="L337">            System.out.println(&quot;Всего заказов: &quot; + pizzeria.getTotalOrders());</span>
+<span class="nc" id="L338">            System.out.println(&quot;Выручка за день: &quot; +</span>
+<span class="nc" id="L339">                             PriceCalculator.formatPrice(pizzeria.calculateDailyRevenue()));</span>
+<span class="nc" id="L340">            System.out.println(&quot;Стоимость инвентаря: &quot; +</span>
+<span class="nc" id="L341">                             PriceCalculator.formatPrice(inventory.calculateTotalInventoryValue()));</span>
+
+            // 17. Демонстрация обработки исключений
+<span class="nc" id="L344">            System.out.println(&quot;\n17. ДЕМОНСТРАЦИЯ ОБРАБОТКИ ИСКЛЮЧЕНИЙ&quot;);</span>
+<span class="nc" id="L345">            System.out.println(&quot;-------------------------------------------------&quot;);</span>
+
+<span class="nc" id="L347">            demonstrateExceptionHandling(</span>
+                ingredientFactory, pizzaFactory, orderService, paymentFactory);
+
+            // Закрытие пиццерии
+<span class="nc" id="L351">            System.out.println(&quot;\n=================================================&quot;);</span>
+<span class="nc" id="L352">            pizzeria.close();</span>
+<span class="nc" id="L353">            System.out.println(&quot;=================================================&quot;);</span>
+<span class="nc" id="L354">            System.out.println(&quot;   ДЕМОНСТРАЦИЯ ЗАВЕРШЕНА&quot;);</span>
+<span class="nc" id="L355">            System.out.println(&quot;=================================================&quot;);</span>
+
+<span class="nc" id="L357">        } catch (Exception e) {</span>
+<span class="nc" id="L358">            System.err.println(&quot;Критическая ошибка: &quot; + e.getMessage());</span>
+<span class="nc" id="L359">            e.printStackTrace();</span>
+<span class="nc" id="L360">        }</span>
+<span class="nc" id="L361">    }</span>
+
+    /**
+     * Демонстрация обработки персональных исключений
+     */
+    private static void demonstrateExceptionHandling(
+            IngredientFactory ingredientFactory,
+            PizzaFactory pizzaFactory,
+            OrderService orderService,
+            PaymentFactory paymentFactory) {
+
+<span class="nc" id="L372">        System.out.println(&quot;Проверка обработки исключений:&quot;);</span>
+
+        // 1. InvalidPriceException
+        try {
+<span class="nc" id="L376">            new Cheese(&quot;Тестовый сыр&quot;, -10.0, &quot;Тест&quot;);</span>
+<span class="nc" id="L377">        } catch (InvalidPriceException e) {</span>
+<span class="nc" id="L378">            System.out.println(&quot;✓ InvalidPriceException: &quot; + e.getMessage());</span>
+<span class="nc" id="L379">        }</span>
+
+        // 2. InvalidPizzaSizeException
+        try {
+<span class="nc" id="L383">            pizzaFactory.createPizza(&quot;маргарита&quot;, null);</span>
+<span class="nc" id="L384">        } catch (Exception e) {</span>
+<span class="nc" id="L385">            System.out.println(&quot;✓ InvalidPizzaSizeException: &quot; + e.getMessage());</span>
+<span class="nc" id="L386">        }</span>
+
+        // 3. InvalidDiscountException
+        try {
+<span class="nc" id="L390">            Discount invalidDiscount = new Discount(&quot;TEST&quot;, 150.0);</span>
+<span class="nc" id="L391">        } catch (InvalidDiscountException e) {</span>
+<span class="nc" id="L392">            System.out.println(&quot;✓ InvalidDiscountException: &quot; + e.getMessage());</span>
+<span class="nc" id="L393">        }</span>
+
+        // 4. OrderNotFoundException
+        try {
+<span class="nc" id="L397">            orderService.getOrder(&quot;INVALID-ID&quot;);</span>
+<span class="nc" id="L398">        } catch (OrderNotFoundException e) {</span>
+<span class="nc" id="L399">            System.out.println(&quot;✓ OrderNotFoundException: &quot; + e.getMessage());</span>
+<span class="nc" id="L400">        }</span>
+
+        // 5. InvalidPaymentException
+        try {
+<span class="nc" id="L404">            new CashPayment(&quot;TEST&quot;, -100.0);</span>
+<span class="nc" id="L405">        } catch (InvalidPaymentException e) {</span>
+<span class="nc" id="L406">            System.out.println(&quot;✓ InvalidPaymentException: &quot; + e.getMessage());</span>
+<span class="nc" id="L407">        }</span>
+
+        // 6. InvalidDeliveryAddressException
+        try {
+<span class="nc" id="L411">            new Address(&quot;&quot;, &quot;&quot;, &quot;Москва&quot;, &quot;101000&quot;);</span>
+<span class="nc" id="L412">        } catch (InvalidDeliveryAddressException e) {</span>
+<span class="nc" id="L413">            System.out.println(&quot;✓ InvalidDeliveryAddressException: &quot; + e.getMessage());</span>
+<span class="nc" id="L414">        }</span>
+
+<span class="nc" id="L416">        System.out.println(&quot;\nВсе исключения обработаны корректно!&quot;);</span>
+<span class="nc" id="L417">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

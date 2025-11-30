@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Kitchen.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lab2</a> &gt; <a href="index.source.html" class="el_package">com.pizzeria.model</a> &gt; <span class="el_source">Kitchen.java</span></div><h1>Kitchen.java</h1><pre class="source lang-java linenums">package com.pizzeria.model;
+
+import com.pizzeria.exceptions.InsufficientIngredientsException;
+import com.pizzeria.model.products.Pizza;
+import com.pizzeria.model.users.Chef;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Класс кухни
+ */
+public class Kitchen {
+    private List&lt;Chef&gt; chefs;
+    private List&lt;Order&gt; currentOrders;
+    private Inventory inventory;
+    private int maxCapacity;
+
+<span class="nc" id="L19">    public Kitchen(Inventory inventory) {</span>
+<span class="nc" id="L20">        this.inventory = inventory;</span>
+<span class="nc" id="L21">        this.chefs = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L22">        this.currentOrders = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L23">        this.maxCapacity = 10;</span>
+<span class="nc" id="L24">    }</span>
+
+    public void addChef(Chef chef) {
+<span class="nc" id="L27">        chefs.add(chef);</span>
+<span class="nc" id="L28">        System.out.println(&quot;Повар добавлен на кухню: &quot; + chef.getFullName());</span>
+<span class="nc" id="L29">    }</span>
+
+    public void prepareOrder(Order order) throws InsufficientIngredientsException {
+<span class="nc bnc" id="L32" title="All 2 branches missed.">        if (currentOrders.size() &gt;= maxCapacity) {</span>
+<span class="nc" id="L33">            System.out.println(&quot;Кухня переполнена! Ожидайте...&quot;);</span>
+<span class="nc" id="L34">            return;</span>
+        }
+
+<span class="nc" id="L37">        currentOrders.add(order);</span>
+<span class="nc" id="L38">        System.out.println(&quot;Заказ #&quot; + order.getId() + &quot; принят на кухню&quot;);</span>
+
+<span class="nc" id="L40">        Chef availableChef = findAvailableChef();</span>
+<span class="nc bnc" id="L41" title="All 2 branches missed.">        if (availableChef != null) {</span>
+<span class="nc" id="L42">            cookOrder(order, availableChef);</span>
+        }
+<span class="nc" id="L44">    }</span>
+
+    private Chef findAvailableChef() {
+<span class="nc bnc" id="L47" title="All 2 branches missed.">        return chefs.isEmpty() ? null : chefs.get(0);</span>
+    }
+
+    private void cookOrder(Order order, Chef chef) throws InsufficientIngredientsException {
+<span class="nc bnc" id="L51" title="All 2 branches missed.">        for (OrderItem item : order.getItems()) {</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">            if (item.getProduct() instanceof Pizza) {</span>
+<span class="nc" id="L53">                Pizza pizza = (Pizza) item.getProduct();</span>
+<span class="nc" id="L54">                chef.cookPizza(pizza);</span>
+            }
+<span class="nc" id="L56">        }</span>
+<span class="nc" id="L57">        completeOrder(order);</span>
+<span class="nc" id="L58">    }</span>
+
+    public void completeOrder(Order order) {
+<span class="nc" id="L61">        currentOrders.remove(order);</span>
+<span class="nc" id="L62">        System.out.println(&quot;Заказ #&quot; + order.getId() + &quot; готов!&quot;);</span>
+<span class="nc" id="L63">    }</span>
+
+    public boolean isBusy() {
+<span class="nc bnc" id="L66" title="All 2 branches missed.">        return currentOrders.size() &gt;= maxCapacity;</span>
+    }
+
+    public int getActiveOrdersCount() {
+<span class="nc" id="L70">        return currentOrders.size();</span>
+    }
+
+    // Getters and Setters
+<span class="nc" id="L74">    public List&lt;Chef&gt; getChefs() { return chefs; }</span>
+<span class="nc" id="L75">    public void setChefs(List&lt;Chef&gt; chefs) { this.chefs = chefs; }</span>
+
+<span class="nc" id="L77">    public List&lt;Order&gt; getCurrentOrders() { return currentOrders; }</span>
+
+<span class="nc" id="L79">    public Inventory getInventory() { return inventory; }</span>
+<span class="nc" id="L80">    public void setInventory(Inventory inventory) { this.inventory = inventory; }</span>
+
+<span class="nc" id="L82">    public int getMaxCapacity() { return maxCapacity; }</span>
+<span class="nc" id="L83">    public void setMaxCapacity(int maxCapacity) { this.maxCapacity = maxCapacity; }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

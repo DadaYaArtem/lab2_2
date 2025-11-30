@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Address.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lab2</a> &gt; <a href="index.source.html" class="el_package">com.pizzeria.model</a> &gt; <span class="el_source">Address.java</span></div><h1>Address.java</h1><pre class="source lang-java linenums">package com.pizzeria.model;
+
+import com.pizzeria.exceptions.InvalidDeliveryAddressException;
+
+/**
+ * Класс адреса
+ */
+public class Address {
+    private String street;
+    private String houseNumber;
+    private String apartmentNumber;
+    private String city;
+    private String postalCode;
+    private double latitude;
+    private double longitude;
+
+    public Address(String street, String houseNumber, String city, String postalCode)
+<span class="nc" id="L18">            throws InvalidDeliveryAddressException {</span>
+<span class="nc" id="L19">        validateAddress(street, houseNumber, city, postalCode);</span>
+<span class="nc" id="L20">        this.street = street;</span>
+<span class="nc" id="L21">        this.houseNumber = houseNumber;</span>
+<span class="nc" id="L22">        this.city = city;</span>
+<span class="nc" id="L23">        this.postalCode = postalCode;</span>
+<span class="nc" id="L24">    }</span>
+
+    private void validateAddress(String street, String houseNumber, String city, String postalCode)
+            throws InvalidDeliveryAddressException {
+<span class="nc bnc" id="L28" title="All 4 branches missed.">        if (street == null || street.trim().isEmpty()) {</span>
+<span class="nc" id="L29">            throw new InvalidDeliveryAddressException(street, &quot;Улица не может быть пустой&quot;);</span>
+        }
+<span class="nc bnc" id="L31" title="All 4 branches missed.">        if (houseNumber == null || houseNumber.trim().isEmpty()) {</span>
+<span class="nc" id="L32">            throw new InvalidDeliveryAddressException(houseNumber, &quot;Номер дома не может быть пустым&quot;);</span>
+        }
+<span class="nc bnc" id="L34" title="All 4 branches missed.">        if (city == null || city.trim().isEmpty()) {</span>
+<span class="nc" id="L35">            throw new InvalidDeliveryAddressException(city, &quot;Город не может быть пустым&quot;);</span>
+        }
+<span class="nc" id="L37">    }</span>
+
+    public double calculateDistance(Address other) {
+        // Упрощенный расчет расстояния
+<span class="nc" id="L41">        double dx = this.latitude - other.latitude;</span>
+<span class="nc" id="L42">        double dy = this.longitude - other.longitude;</span>
+<span class="nc" id="L43">        return Math.sqrt(dx * dx + dy * dy) * 111; // примерно в км</span>
+    }
+
+    // Getters and Setters
+<span class="nc" id="L47">    public String getStreet() { return street; }</span>
+<span class="nc" id="L48">    public void setStreet(String street) { this.street = street; }</span>
+
+<span class="nc" id="L50">    public String getHouseNumber() { return houseNumber; }</span>
+<span class="nc" id="L51">    public void setHouseNumber(String houseNumber) { this.houseNumber = houseNumber; }</span>
+
+<span class="nc" id="L53">    public String getApartmentNumber() { return apartmentNumber; }</span>
+<span class="nc" id="L54">    public void setApartmentNumber(String apartmentNumber) { this.apartmentNumber = apartmentNumber; }</span>
+
+<span class="nc" id="L56">    public String getCity() { return city; }</span>
+<span class="nc" id="L57">    public void setCity(String city) { this.city = city; }</span>
+
+<span class="nc" id="L59">    public String getPostalCode() { return postalCode; }</span>
+<span class="nc" id="L60">    public void setPostalCode(String postalCode) { this.postalCode = postalCode; }</span>
+
+<span class="nc" id="L62">    public double getLatitude() { return latitude; }</span>
+<span class="nc" id="L63">    public void setLatitude(double latitude) { this.latitude = latitude; }</span>
+
+<span class="nc" id="L65">    public double getLongitude() { return longitude; }</span>
+<span class="nc" id="L66">    public void setLongitude(double longitude) { this.longitude = longitude; }</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L70">        return String.format(&quot;%s, д. %s%s, %s, %s&quot;,</span>
+                street, houseNumber,
+<span class="nc bnc" id="L72" title="All 2 branches missed.">                apartmentNumber != null ? &quot;, кв. &quot; + apartmentNumber : &quot;&quot;,</span>
+                city, postalCode);
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Customer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lab2</a> &gt; <a href="index.source.html" class="el_package">com.pizzeria.model.users</a> &gt; <span class="el_source">Customer.java</span></div><h1>Customer.java</h1><pre class="source lang-java linenums">package com.pizzeria.model.users;
+
+import com.pizzeria.interfaces.Notifiable;
+import com.pizzeria.model.LoyaltyCard;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Класс клиента
+ */
+public class Customer extends Person implements Notifiable {
+    private LoyaltyCard loyaltyCard;
+    private List&lt;String&gt; orderHistory;
+    private boolean notificationEnabled;
+    private String preferredContact;
+
+    public Customer(String id, String firstName, String lastName) {
+<span class="fc" id="L19">        super(id, firstName, lastName);</span>
+<span class="fc" id="L20">        this.orderHistory = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L21">        this.notificationEnabled = true;</span>
+<span class="fc" id="L22">        this.preferredContact = &quot;email&quot;;</span>
+<span class="fc" id="L23">    }</span>
+
+    @Override
+    public String getRole() {
+<span class="fc" id="L27">        return &quot;Клиент&quot;;</span>
+    }
+
+    @Override
+    public void sendNotification(String message) {
+<span class="nc bnc" id="L32" title="All 2 branches missed.">        if (notificationEnabled) {</span>
+<span class="nc" id="L33">            System.out.println(&quot;Отправка уведомления клиенту &quot; + getFullName() + &quot;: &quot; + message);</span>
+        }
+<span class="nc" id="L35">    }</span>
+
+    @Override
+    public String getContactInfo() {
+<span class="pc bpc" id="L39" title="1 of 4 branches missed.">        if (&quot;phone&quot;.equals(preferredContact) &amp;&amp; phoneNumber != null) {</span>
+<span class="fc" id="L40">            return phoneNumber.getFullNumber();</span>
+        }
+<span class="fc bfc" id="L42" title="All 2 branches covered.">        return email != null ? email.getFullEmail() : &quot;&quot;;</span>
+    }
+
+    @Override
+    public boolean isNotificationEnabled() {
+<span class="fc" id="L47">        return notificationEnabled;</span>
+    }
+
+    public void addToOrderHistory(String orderId) {
+<span class="fc" id="L51">        orderHistory.add(orderId);</span>
+<span class="fc" id="L52">    }</span>
+
+    public int getTotalOrders() {
+<span class="fc" id="L55">        return orderHistory.size();</span>
+    }
+
+    public boolean isVIP() {
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        return orderHistory.size() &gt; 10;</span>
+    }
+
+    // Getters and Setters
+<span class="fc" id="L63">    public LoyaltyCard getLoyaltyCard() { return loyaltyCard; }</span>
+<span class="fc" id="L64">    public void setLoyaltyCard(LoyaltyCard loyaltyCard) { this.loyaltyCard = loyaltyCard; }</span>
+
+<span class="fc" id="L66">    public List&lt;String&gt; getOrderHistory() { return orderHistory; }</span>
+
+    public void setNotificationEnabled(boolean notificationEnabled) {
+<span class="fc" id="L69">        this.notificationEnabled = notificationEnabled;</span>
+<span class="fc" id="L70">    }</span>
+
+<span class="fc" id="L72">    public String getPreferredContact() { return preferredContact; }</span>
+    public void setPreferredContact(String preferredContact) {
+<span class="fc" id="L74">        this.preferredContact = preferredContact;</span>
+<span class="fc" id="L75">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

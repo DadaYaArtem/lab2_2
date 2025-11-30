@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReportGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lab2</a> &gt; <a href="index.source.html" class="el_package">com.pizzeria.util</a> &gt; <span class="el_source">ReportGenerator.java</span></div><h1>ReportGenerator.java</h1><pre class="source lang-java linenums">package com.pizzeria.util;
+
+import com.pizzeria.model.Order;
+import com.pizzeria.model.Pizzeria;
+import com.pizzeria.model.users.Employee;
+
+import java.time.LocalDate;
+import java.util.List;
+
+/**
+ * Генератор отчетов
+ */
+<span class="nc" id="L13">public class ReportGenerator {</span>
+
+    public static String generateDailySalesReport(Pizzeria pizzeria, LocalDate date) {
+<span class="nc" id="L16">        StringBuilder report = new StringBuilder();</span>
+<span class="nc" id="L17">        report.append(&quot;========== ОТЧЕТ О ПРОДАЖАХ ==========\n&quot;);</span>
+<span class="nc" id="L18">        report.append(&quot;Дата: &quot;).append(date).append(&quot;\n&quot;);</span>
+<span class="nc" id="L19">        report.append(&quot;Пиццерия: &quot;).append(pizzeria.getName()).append(&quot;\n&quot;);</span>
+<span class="nc" id="L20">        report.append(&quot;--------------------------------------\n&quot;);</span>
+<span class="nc" id="L21">        report.append(&quot;Общее количество заказов: &quot;).append(pizzeria.getTotalOrders()).append(&quot;\n&quot;);</span>
+<span class="nc" id="L22">        report.append(&quot;Общая выручка: &quot;).append(PriceCalculator.formatPrice(pizzeria.calculateDailyRevenue())).append(&quot;\n&quot;);</span>
+<span class="nc" id="L23">        report.append(&quot;======================================\n&quot;);</span>
+
+<span class="nc" id="L25">        return report.toString();</span>
+    }
+
+    public static String generateEmployeeReport(Employee employee) {
+<span class="nc" id="L29">        StringBuilder report = new StringBuilder();</span>
+<span class="nc" id="L30">        report.append(&quot;========== ОТЧЕТ О СОТРУДНИКЕ ==========\n&quot;);</span>
+<span class="nc" id="L31">        report.append(&quot;ФИО: &quot;).append(employee.getFullName()).append(&quot;\n&quot;);</span>
+<span class="nc" id="L32">        report.append(&quot;ID: &quot;).append(employee.getId()).append(&quot;\n&quot;);</span>
+<span class="nc" id="L33">        report.append(&quot;Должность: &quot;).append(employee.getRole()).append(&quot;\n&quot;);</span>
+<span class="nc" id="L34">        report.append(&quot;Зарплата: &quot;).append(PriceCalculator.formatPrice(employee.getSalary())).append(&quot;\n&quot;);</span>
+<span class="nc" id="L35">        report.append(&quot;Стаж: &quot;).append(employee.getYearsOfService()).append(&quot; лет\n&quot;);</span>
+<span class="nc bnc" id="L36" title="All 2 branches missed.">        report.append(&quot;Статус: &quot;).append(employee.isActive() ? &quot;Активен&quot; : &quot;Неактивен&quot;).append(&quot;\n&quot;);</span>
+<span class="nc" id="L37">        report.append(&quot;========================================\n&quot;);</span>
+
+<span class="nc" id="L39">        return report.toString();</span>
+    }
+
+    public static String generateInventoryReport(List&lt;String&gt; lowStockItems) {
+<span class="nc" id="L43">        StringBuilder report = new StringBuilder();</span>
+<span class="nc" id="L44">        report.append(&quot;========== ОТЧЕТ О СКЛАДЕ ==========\n&quot;);</span>
+<span class="nc" id="L45">        report.append(&quot;Товары с низким запасом:\n&quot;);</span>
+
+<span class="nc bnc" id="L47" title="All 2 branches missed.">        if (lowStockItems.isEmpty()) {</span>
+<span class="nc" id="L48">            report.append(&quot;Нет товаров с низким запасом\n&quot;);</span>
+        } else {
+<span class="nc bnc" id="L50" title="All 2 branches missed.">            for (String item : lowStockItems) {</span>
+<span class="nc" id="L51">                report.append(&quot;  - &quot;).append(item).append(&quot;\n&quot;);</span>
+<span class="nc" id="L52">            }</span>
+        }
+
+<span class="nc" id="L55">        report.append(&quot;====================================\n&quot;);</span>
+<span class="nc" id="L56">        return report.toString();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

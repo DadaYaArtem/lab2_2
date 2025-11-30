@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Appetizer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lab2</a> &gt; <a href="index.source.html" class="el_package">com.pizzeria.model.products</a> &gt; <span class="el_source">Appetizer.java</span></div><h1>Appetizer.java</h1><pre class="source lang-java linenums">package com.pizzeria.model.products;
+
+import com.pizzeria.exceptions.InvalidPaymentException;
+import com.pizzeria.exceptions.InvalidPriceException;
+
+/**
+ * Класс закуски
+ */
+public class Appetizer extends Product {
+    private boolean isHot;
+    private int servingSize;
+
+    public Appetizer(String name, double basePrice) throws InvalidPriceException {
+<span class="nc" id="L14">        super(name, basePrice);</span>
+<span class="nc" id="L15">        this.isHot = false;</span>
+<span class="nc" id="L16">        this.servingSize = 100;</span>
+<span class="nc" id="L17">    }</span>
+
+    @Override
+    public int getPreparationTime() {
+<span class="nc bnc" id="L21" title="All 2 branches missed.">        return isHot ? 10 : 3;</span>
+    }
+
+    @Override
+    public int getCalories() {
+<span class="nc" id="L26">        return servingSize * 2;</span>
+    }
+
+    @Override
+    public boolean processPayment(double amount) throws InvalidPaymentException {
+<span class="nc bnc" id="L31" title="All 2 branches missed.">        if (amount &lt; getFinalPrice()) {</span>
+<span class="nc" id="L32">            throw new InvalidPaymentException(amount, &quot;Недостаточно средств&quot;);</span>
+        }
+<span class="nc" id="L34">        return true;</span>
+    }
+
+    public void heat() {
+<span class="nc" id="L38">        this.isHot = true;</span>
+<span class="nc" id="L39">    }</span>
+
+    // Getters and Setters
+<span class="nc" id="L42">    public boolean isHot() { return isHot; }</span>
+<span class="nc" id="L43">    public void setHot(boolean hot) { isHot = hot; }</span>
+
+<span class="nc" id="L45">    public int getServingSize() { return servingSize; }</span>
+<span class="nc" id="L46">    public void setServingSize(int servingSize) { this.servingSize = servingSize; }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Vegetable.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lab2</a> &gt; <a href="index.source.html" class="el_package">com.pizzeria.model.ingredients</a> &gt; <span class="el_source">Vegetable.java</span></div><h1>Vegetable.java</h1><pre class="source lang-java linenums">package com.pizzeria.model.ingredients;
+
+import com.pizzeria.exceptions.InvalidPriceException;
+
+/**
+ * Класс овощей
+ */
+public class Vegetable extends Ingredient {
+    private boolean isOrganic;
+    private String season;
+    private boolean requiresPreparation;
+
+    public Vegetable(String name, double pricePerUnit) throws InvalidPriceException {
+<span class="nc" id="L14">        super(name, pricePerUnit, &quot;грамм&quot;);</span>
+<span class="nc" id="L15">        this.isVegetarian = true;</span>
+<span class="nc" id="L16">        this.calories = 30;</span>
+<span class="nc" id="L17">    }</span>
+
+    @Override
+    public String getCategory() {
+<span class="nc" id="L21">        return &quot;Овощи&quot;;</span>
+    }
+
+    public String getPreparationMethod() {
+<span class="nc bnc" id="L25" title="All 2 branches missed.">        if (name.equalsIgnoreCase(&quot;Помидоры&quot;)) {</span>
+<span class="nc" id="L26">            return &quot;Нарезать кружочками&quot;;</span>
+<span class="nc bnc" id="L27" title="All 2 branches missed.">        } else if (name.equalsIgnoreCase(&quot;Лук&quot;)) {</span>
+<span class="nc" id="L28">            return &quot;Нарезать кольцами&quot;;</span>
+        }
+<span class="nc" id="L30">        return &quot;Нарезать&quot;;</span>
+    }
+
+    public boolean isFresh() {
+<span class="nc bnc" id="L34" title="All 2 branches missed.">        return !requiresPreparation;</span>
+    }
+
+    // Getters and Setters
+<span class="nc" id="L38">    public boolean isOrganic() { return isOrganic; }</span>
+<span class="nc" id="L39">    public void setOrganic(boolean organic) { isOrganic = organic; }</span>
+
+<span class="nc" id="L41">    public String getSeason() { return season; }</span>
+<span class="nc" id="L42">    public void setSeason(String season) { this.season = season; }</span>
+
+<span class="nc" id="L44">    public boolean isRequiresPreparation() { return requiresPreparation; }</span>
+    public void setRequiresPreparation(boolean requiresPreparation) {
+<span class="nc" id="L46">        this.requiresPreparation = requiresPreparation;</span>
+<span class="nc" id="L47">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PremiumPricingStrategy.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lab2</a> &gt; <a href="index.source.html" class="el_package">com.pizzeria.strategy</a> &gt; <span class="el_source">PremiumPricingStrategy.java</span></div><h1>PremiumPricingStrategy.java</h1><pre class="source lang-java linenums">package com.pizzeria.strategy;
+
+import com.pizzeria.model.Order;
+
+/**
+ * Премиум стратегия ценообразования (с дополнительными услугами)
+ */
+public class PremiumPricingStrategy implements PriceCalculationStrategy {
+    private double serviceFee;
+
+<span class="nc" id="L11">    public PremiumPricingStrategy(double serviceFee) {</span>
+<span class="nc" id="L12">        this.serviceFee = serviceFee;</span>
+<span class="nc" id="L13">    }</span>
+
+    @Override
+    public double calculatePrice(Order order) {
+<span class="nc" id="L17">        double basePrice = order.getPrice();</span>
+<span class="nc" id="L18">        double deliveryCost = order.calculateDeliveryCost();</span>
+<span class="nc" id="L19">        double total = basePrice + deliveryCost;</span>
+
+        // Добавляем премиум сервисный сбор
+<span class="nc" id="L22">        return total + serviceFee;</span>
+    }
+
+    public double getServiceFee() {
+<span class="nc" id="L26">        return serviceFee;</span>
+    }
+
+    public void setServiceFee(double serviceFee) {
+<span class="nc" id="L30">        this.serviceFee = serviceFee;</span>
+<span class="nc" id="L31">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

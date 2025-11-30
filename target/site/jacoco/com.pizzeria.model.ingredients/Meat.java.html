@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Meat.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lab2</a> &gt; <a href="index.source.html" class="el_package">com.pizzeria.model.ingredients</a> &gt; <span class="el_source">Meat.java</span></div><h1>Meat.java</h1><pre class="source lang-java linenums">package com.pizzeria.model.ingredients;
+
+import com.pizzeria.exceptions.InvalidPriceException;
+
+/**
+ * Класс мяса
+ */
+public class Meat extends Ingredient {
+    private String meatType;
+    private boolean isProcessed;
+    private String origin;
+
+    public Meat(String name, double pricePerUnit, String meatType) throws InvalidPriceException {
+<span class="nc" id="L14">        super(name, pricePerUnit, &quot;грамм&quot;);</span>
+<span class="nc" id="L15">        this.meatType = meatType;</span>
+<span class="nc" id="L16">        this.isVegetarian = false;</span>
+<span class="nc" id="L17">        this.calories = 250;</span>
+<span class="nc" id="L18">    }</span>
+
+    @Override
+    public String getCategory() {
+<span class="nc" id="L22">        return &quot;Мясо&quot;;</span>
+    }
+
+    public boolean requiresCooking() {
+<span class="nc bnc" id="L26" title="All 2 branches missed.">        return !isProcessed;</span>
+    }
+
+    public int getCookingTime() {
+<span class="nc bnc" id="L30" title="All 2 branches missed.">        if (meatType.equalsIgnoreCase(&quot;Курица&quot;)) {</span>
+<span class="nc" id="L31">            return 15;</span>
+<span class="nc bnc" id="L32" title="All 2 branches missed.">        } else if (meatType.equalsIgnoreCase(&quot;Говядина&quot;)) {</span>
+<span class="nc" id="L33">            return 20;</span>
+        }
+<span class="nc" id="L35">        return 10;</span>
+    }
+
+    // Getters and Setters
+<span class="nc" id="L39">    public String getMeatType() { return meatType; }</span>
+<span class="nc" id="L40">    public void setMeatType(String meatType) { this.meatType = meatType; }</span>
+
+<span class="nc" id="L42">    public boolean isProcessed() { return isProcessed; }</span>
+<span class="nc" id="L43">    public void setProcessed(boolean processed) { isProcessed = processed; }</span>
+
+<span class="nc" id="L45">    public String getOrigin() { return origin; }</span>
+<span class="nc" id="L46">    public void setOrigin(String origin) { this.origin = origin; }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
