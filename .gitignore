@@ -37,3 +37,6 @@ Thumbs.db
 *.zip
 *.tar.gz
 *.rar
+
+# Generated documentation
+docs/javadoc/
