@@ -73,16 +73,21 @@ class DiscountTest {
     }
 
     @Test
-    @DisplayName("Скидка не применима после достижения лимита")
+    @DisplayName("Скидка становится не применимой сразу после достижения лимита")
     void testDiscountNotApplicableAfterLimit() {
         discount.setUsageLimit(2);
 
         discount.use();
         discount.use();
-        assertTrue(discount.isDiscountApplicable()); // еще можно использовать
 
-        // Не увеличивается, потому что лимит достигнут
+        // После 2 использований — уже нельзя применить!
+        assertFalse(discount.isDiscountApplicable());  // ← было true → стало false
+
         assertEquals(2, discount.getTimesUsed());
+
+        // А если попробовать ещё раз — не увеличится
+        discount.use(); // должен быть защищён от этого, или просто не увеличивать
+        assertEquals(2, discount.getTimesUsed()); // всё ещё 2
     }
 
     @Test

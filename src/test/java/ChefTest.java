@@ -49,7 +49,7 @@ class ChefTest {
     @Test
     @DisplayName("Получение роли из enum")
     void testGetEmployeeRole() {
-        assertEquals(EmployeeRole.CHEF, chef.getEmployeeRole());
+        assertEquals(EmployeeRole.CHEF, chef.getRoleEnum());
     }
 
     @Test

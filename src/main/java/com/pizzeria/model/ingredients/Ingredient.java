@@ -14,7 +14,7 @@ public abstract class Ingredient {
     protected int calories;
 
     public Ingredient(String name, double pricePerUnit, String unit) throws InvalidPriceException {
-        if (pricePerUnit < 0) {
+        if (pricePerUnit <= 0) {
             throw new InvalidPriceException(pricePerUnit);
         }
         this.name = name;

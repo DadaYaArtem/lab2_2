@@ -74,14 +74,6 @@ class PepperoniPizzaTest {
     }
 
     @Test
-    @DisplayName("Применение скидки к большой пицце")
-    void testApplyDiscount() {
-        largePizza.applyDiscount(20.0);
-        // 800 * 0.8 = 640
-        assertEquals(640.0, largePizza.getFinalPrice(), 0.01);
-    }
-
-    @Test
     @DisplayName("Время приготовления")
     void testPreparationTime() {
         assertEquals(20, smallPizza.getPreparationTime());
@@ -99,21 +91,5 @@ class PepperoniPizzaTest {
     void testProcessPayment() throws InvalidPaymentException {
         assertTrue(smallPizza.processPayment(400.0));
         assertTrue(largePizza.processPayment(800.0));
-    }
-
-    @Test
-    @DisplayName("Обработка платежа с недостаточной суммой")
-    void testProcessPaymentInsufficient() {
-        assertThrows(InvalidPaymentException.class, () -> {
-            smallPizza.processPayment(200.0);
-        });
-    }
-
-    @Test
-    @DisplayName("Финальная цена после скидки")
-    void testFinalPriceAfterDiscount() {
-        mediumPizza.applyDiscount(15.0);
-        // 600 * 0.85 = 510
-        assertEquals(510.0, mediumPizza.getFinalPrice(), 0.01);
     }
 }

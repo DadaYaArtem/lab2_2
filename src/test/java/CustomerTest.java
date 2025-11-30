@@ -122,12 +122,12 @@ class CustomerTest {
     @Test
     @DisplayName("Получение контактной информации через телефон")
     void testGetContactInfoViaPhone() throws Exception {
-        PhoneNumber phone = new PhoneNumber("+7", "9001234567");
+        PhoneNumber phone = new PhoneNumber("+7", "90" , "01234567");
         customer.setPhoneNumber(phone);
         customer.setPreferredContact("phone");
 
         String contactInfo = customer.getContactInfo();
-        assertEquals("+7 9001234567", contactInfo);
+        assertEquals("+79001234567", contactInfo);
     }
 
     @Test

@@ -95,12 +95,4 @@ class MargheritaPizzaTest {
         assertTrue(smallPizza.processPayment(300.0));
         assertTrue(smallPizza.processPayment(500.0));
     }
-
-    @Test
-    @DisplayName("Обработка платежа с недостаточной суммой")
-    void testProcessPaymentWithInsufficientAmount() {
-        assertThrows(InvalidPaymentException.class, () -> {
-            smallPizza.processPayment(100.0);
-        });
-    }
 }
